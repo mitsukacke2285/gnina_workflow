@@ -183,15 +183,6 @@ def report(docking_results):
 # 4.3 Additional functions
 # ------------------------------------------------------------------------------
 
-def rmsd_calculation():
-    print("\n === Running mcs (maximum common structure) rmsd calculation ===")
-    cognate = Chem.MolFromMolFile(f"{ligand_directory}/{ligand_id}_corrected_pose.sdf")
-    poses = Chem.SDMolSupplier(f"{docking_results_directory}/{ligand_id}_docked_{pdb_id}.sdf")
-    for i, pose in enumerate(poses):
-        RDLogger.DisableLog('rdApp.warning')
-        n_match, rmsd = uru.mcs_rmsd(cognate, pose)
-        print(f"{n_match}\t{rmsd:.2f}")
-
 def rmsd_calculation(ligand_directory, docking_results_directory, ligand_id, pdb_id):
     print("\n === Running mcs (maximum common structure) rmsd calculation ===")
     cognate = Chem.MolFromMolFile(f"{ligand_directory}/{ligand_id}_corrected_pose.sdf")
