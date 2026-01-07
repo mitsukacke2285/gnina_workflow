@@ -36,8 +36,8 @@ def select_ligand_from_pdb():
     for i, lig in enumerate(unique_ligands):
         print(i, lig)
     
-    #ligand_id = unique_ligands[int(input('Enter index: '))]
-    ligand_id = unique_ligands[1]
+    ligand_id = unique_ligands[int(input('Enter index: '))]
+    #ligand_id = unique_ligands[1]
     print(f"\n === You have selected {ligand_id} as your ligand ===")
 
     single_ligand = u.select_atoms(f"resname {ligand_id}")
