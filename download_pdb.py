@@ -35,7 +35,8 @@ def download_pdb_file(pdb_id, output_dir="."):
 # ------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    pdb_id = "4OHU"
+    pdb_id = input("Enter desired PDB code to be downloaded from RCSB: ")
+    #pdb_id = "4OHU"
     #pdb_id = os.getenv("PARAM_PDB_ID")
     #protein_directory = os.getenv("PARAM_PROTEIN_DIRECTORY")
     protein_directory = "molecular_docking/protein_files"
