@@ -41,8 +41,8 @@ else:
     subprocess.run(["chmod", "+x", "gnina"])
     print("✅ Download complete.")
 
-#pdb_id = input("Enter PDB code: ") # The Protein ID we're looking at
-#ligand_id = input("Enter ligand code: ") # The ID of the co-crystallized ligand
+pdb_id = input("Enter PDB code used in protein_preparation.py: ")
+ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
 
 ### Working directories ###
 protein_directory = "molecular_docking/protein_files"
@@ -255,9 +255,9 @@ if ex in inp:
     print(f"You have selected option {selection}.")
 
     if __name__ == "__main__":
-        pdb_id = input("Enter PDB code used in protein_preparation.py: ")
+        #pdb_id = input("Enter PDB code used in protein_preparation.py: ")
         #pdb_id = os.getenv("PARAM_PDB_ID")
-        ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
+        #ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
         #ligand_name = os.getenv("PARAM_LIGAND_ID")
 
         #with open("params.json") as f:
