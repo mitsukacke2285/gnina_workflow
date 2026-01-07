@@ -255,7 +255,7 @@ if ex in inp:
     print(f"You have selected option {selection}.")
 
     if __name__ == "__main__":
-        pdb_id = input("Enter PDB code used in ligand_extraction_and_preparation.py: ")
+        pdb_id = input("Enter PDB code used in protein_preparation.py: ")
         #pdb_id = os.getenv("PARAM_PDB_ID")
         ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
         #ligand_name = os.getenv("PARAM_LIGAND_ID")
