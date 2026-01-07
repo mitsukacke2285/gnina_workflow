@@ -228,10 +228,9 @@ selection = input("\n === Welcome to gnina. Please select the docking mode: \
 
 inp = [8, 16, 24, 32, 40, 48, 56, 64, 72, 80]
 
-#ex = int(input("\n Define exhaustiveness (8, 16, 24, 32, 40, 48, 56, 64): "))
+ex = int(input("\n Define exhaustiveness (8, 16, 24, 32, 40, 48, 56, 64): "))
 if ex in inp:
     print(f"You have selected  exhaustiveness level {ex}")
-    ex = int(input("\n Define exhaustiveness (8, 16, 24, 32, 40, 48, 56, 64): ")) 
     ask_gpu = input("\n Run with GPU? [y/n]: ").strip().lower()
     ask_cnn = input("\n Run with CNN? [y/n]: ").strip().lower()
     
