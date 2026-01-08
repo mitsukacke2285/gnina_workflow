@@ -257,7 +257,3 @@ else:
     print("\n === Invalid input. Please try again with the given options only! ===")
     print("\n === Exiting gnina ===")
     ex = ''
-
-
-
-
