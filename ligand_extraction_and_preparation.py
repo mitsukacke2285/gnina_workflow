@@ -7,6 +7,7 @@ from rdkit.Chem.MolStandardize import rdMolStandardize
 from rdkit.Chem.EnumerateStereoisomers import EnumerateStereoisomers, StereoEnumerationOptions
 import subprocess
 import os
+import json
 import requests
 
 ### Set protein directory ###
@@ -37,12 +38,15 @@ def select_ligand_from_pdb():
         print(i, lig)
     
     ligand_id = unique_ligands[int(input('Enter index: '))]
-    #ligand_id = unique_ligands[1]
     print(f"\n === You have selected {ligand_id} as your ligand ===")
 
     single_ligand = u.select_atoms(f"resname {ligand_id}")
     single_ligand.write(f"{ligand_directory}/{ligand_id}_fromPDB.pdb")
     print(f"Ligand {ligand_id} extracted from original PDB!")
+
+    # Create parameter text file
+    with open("params.json", "w") as param_file:
+        param_file.write('{"pdb_id": "' + pdb_id + '", "ligand_id": "' + ligand_id + '"}\n')
     
     return ligand_id
 
@@ -148,9 +152,9 @@ def scrubbing_ligands():
 # ------------------------------------------------------------------------------
 
 if __name__ == "__main__":
-    #pdb_id = "4OHU" #os.getenv("PARAM_PDB_ID")
-    pdb_id = input("Enter PDB code used in protein_preparation.py: ")  
-    # ligand_id = "2TK"
+    with open('params.json', 'r') as f:
+        params = json.load(f)
+    pdb_id = params['pdb_id']
     ligand_id = select_ligand_from_pdb()
     download_ideal_ligand()
     corrected_pose_with_H = fix_and_align(ideal_mol = Chem.MolFromMolFile(f"{ligand_directory}/{ligand_id}_ideal.sdf", removeHs=True), pose_mol = Chem.MolFromPDBFile(f"{ligand_directory}/{ligand_id}_fromPDB.pdb", removeHs=True))
