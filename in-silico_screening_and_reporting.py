@@ -19,6 +19,7 @@ from rdkit import Chem
 from rdkit.Chem import PandasTools
 from rdkit.rdBase import BlockLogs
 import pandas as pd
+import json
 
 ### Check for previous gnina installation ###
 gnina_file = "gnina"
@@ -40,9 +41,6 @@ else:
     # Make gnina executable
     subprocess.run(["chmod", "+x", "gnina"])
     print("✅ Download complete.")
-
-pdb_id = input("Enter PDB code used in protein_preparation.py: ")
-ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
 
 ### Working directories ###
 protein_directory = "molecular_docking/protein_files"
@@ -246,16 +244,13 @@ if ex in inp:
     print(f"You have selected option {selection}.")
 
     if __name__ == "__main__":
-        #pdb_id = input("Enter PDB code used in protein_preparation.py: ")
-        #pdb_id = os.getenv("PARAM_PDB_ID")
-        #ligand_id = input("Enter ligand code used in ligand_extraction_and_preparation.py: ")
-        #ligand_name = os.getenv("PARAM_LIGAND_ID")
-
-        #with open("params.json") as f:
-            #data = json.load(f)
-
-        #ligand_id = data["ligand_id"]
-        #print("Ligand ID parsed:", ligand_id)
+        # Parsing parameters from params.json
+        with open('params.json', 'r') as f:
+            params = json.load(f)
+        pdb_id = params['pdb_id']
+        ligand_id = params['ligand_id']
+        print("PDB ID parsed:", pdb_id)
+        print("Ligand ID parsed:", ligand_id)
 
         docking_main()
 else:
