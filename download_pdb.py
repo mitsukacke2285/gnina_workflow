@@ -1,3 +1,20 @@
+#!/usr/bin/env python
+# coding: utf-8
+
+# In[2]:
+
+
+#!/usr/bin/env python3
+# -*- coding: utf-8 -*-
+
+import os
+import urllib.request
+
+# ------------------------------------------------------------------------------
+# 1. Download structure
+# ------------------------------------------------------------------------------
+
+
 def download_pdb_file(pdb_id, output_dir="."):
     """Download PDB file"""
     print("\n=== Downloading PDB file ===")
@@ -18,3 +35,17 @@ def download_pdb_file(pdb_id, output_dir="."):
     except Exception as e:
         print(f"Download error: {e}")
         exit()
+
+
+# ------------------------------------------------------------------------------
+# Entry point
+# ------------------------------------------------------------------------------
+
+if __name__ == "__main__":
+    pdb_id = input("Enter desired PDB code to be downloaded from RCSB: ")
+    #pdb_id = "4OHU"
+    #pdb_id = os.getenv("PARAM_PDB_ID")
+    #protein_directory = os.getenv("PARAM_PROTEIN_DIRECTORY")
+    protein_directory = "$HOME/PyAutoFEP_workflow/molecular_docking/protein_files"
+    download_pdb_file(pdb_id)
+
