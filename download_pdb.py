@@ -46,6 +46,6 @@ if __name__ == "__main__":
     #pdb_id = "4OHU"
     #pdb_id = os.getenv("PARAM_PDB_ID")
     #protein_directory = os.getenv("PARAM_PROTEIN_DIRECTORY")
-    protein_directory = "$HOME/PyAutoFEP_workflow/molecular_docking/protein_files"
+    protein_directory = "molecular_docking/protein_files"
     download_pdb_file(pdb_id)
 
