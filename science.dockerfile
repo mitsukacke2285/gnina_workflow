@@ -1,17 +1,18 @@
-FROM continuumio/miniconda3
+FROM nvidia/cuda:12.2.2-runtime-ubuntu22.04
+
+# Install Miniconda
+RUN apt-get update && apt-get install -y wget bzip2 && \
+    wget https://repo.anaconda.com/miniconda/Miniconda3-latest-Linux-x86_64.sh && \
+    bash Miniconda3-latest-Linux-x86_64.sh -b -p /opt/conda && \
+    rm Miniconda3-latest-Linux-x86_64.sh
+ RUN apt-get update
+ RUN apt-get install -y libxrender1 libxext6 libx11-6
+
+ENV PATH=/opt/conda/bin:$PATH
 
 WORKDIR /app
 
-# Install CUDA
-RUN apt-get update
-RUN apt-get install -y wget gnupg wget https://developer.download.nvidia.com/compute/cuda/repos/ubuntu2204/x86_64/cuda-keyring_1.1-1_all.deb
-RUN dpkg -i cuda-keyring_1.1-1_all.deb
-RUN apt-get update
-RUN apt-get install -y cuda-runtime-12-2
-
-
-
-# Install pip-only packages (note the hyphenated name on PyPI)
+# Install Python packages
 RUN pip install numpy \
     pandas \
     scipy \
@@ -22,10 +23,9 @@ RUN pip install numpy \
     molscrub \
     openmm \
     pdbfixer \
-    mdanalysis 
+    mdanalysis
 
-
-# Copy your project files
+# Copy your workflow
 COPY . .
 
 CMD ["bash"]
