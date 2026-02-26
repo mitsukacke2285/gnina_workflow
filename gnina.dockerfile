@@ -1,48 +1,80 @@
-FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04
+############################
+# Stage 1 — Build gnina
+############################
+FROM nvidia/cuda:12.2.2-cudnn8-devel-ubuntu22.04 AS builder
 
-WORKDIR /root
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /build
 
-# Install build tools, libraries, and Python packages
-RUN apt-get update && apt-get install -y \
+# Base dependencies
+RUN apt-get update && apt-get install -y --no-install-recommends \
     build-essential \
     git \
+    cmake \
     libboost-all-dev \
     libeigen3-dev \
     libopenbabel-dev \
     python3-dev \
-    python3-setuptools \
-    wget \
-    unzip \
     python3-numpy \
     python3-scipy \
-    cython3 \
     python3-openbabel \
+    python3-pytest \
+    cython3 \
     libprotobuf-dev \
     protobuf-compiler \
     libjsoncpp-dev \
-    python3-pytest
+    ca-certificates \
+    gpg \
+    wget \
+    && rm -rf /var/lib/apt/lists/*
 
-# Install a newer version of CMake from Kitware APT repository
-RUN apt-get remove -y --purge --auto-remove cmake && \
+# Install modern CMake (>=3.25) from Kitware
+RUN wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc | \
+        gpg --dearmor -o /usr/share/keyrings/kitware-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main" \
+        > /etc/apt/sources.list.d/kitware.list && \
     apt-get update && \
-    apt-get install -y ca-certificates gpg wget && \
-    wget -O - https://apt.kitware.com/keys/kitware-archive-latest.asc 2>/dev/null | gpg --dearmor - | tee /usr/share/keyrings/kitware-archive-keyring.gpg >/dev/null && \
-    echo 'deb [signed-by=/usr/share/keyrings/kitware-archive-keyring.gpg] https://apt.kitware.com/ubuntu/ jammy main' | tee /etc/apt/sources.list.d/kitware.list >/dev/null && \
-    apt-get update && \
-    apt-get install -y cmake
+    apt-get install -y cmake && \
+    rm -rf /var/lib/apt/lists/*
 
-# Clone and build Open Babel (if not already provided by libopenbabel-dev)
+# Clone gnina
 RUN git clone --depth 1 --branch v1.3 https://github.com/gnina/gnina.git
-WORKDIR /root/gnina
+
+WORKDIR /build/gnina
+
+# Build
 RUN mkdir build && cd build && \
-    cmake .. -DCMAKE_BUILD_TYPE=Release -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && \
+    cmake .. \
+      -DCMAKE_BUILD_TYPE=Release \
+      -DCMAKE_POLICY_VERSION_MINIMUM=3.5 && \
     make -j$(nproc)
 
-# Set environment variables for gnina
-ENV PATH="/root/gnina/build/bin:${PATH}"
 
-# Create a working directory
+############################
+# Stage 2 — Runtime image
+############################
+FROM nvidia/cuda:12.2.2-cudnn8-runtime-ubuntu22.04
+
+ENV DEBIAN_FRONTEND=noninteractive
+WORKDIR /app
+
+# Runtime dependencies only (no compiler)
+RUN apt-get update && apt-get install -y --no-install-recommends \
+    libboost-all-dev \
+    libopenbabel-dev \
+    libprotobuf-dev \
+    libjsoncpp-dev \
+    python3 \
+    python3-numpy \
+    python3-scipy \
+    python3-openbabel \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copy built binary
+COPY --from=builder /build/gnina/build /opt/gnina
+
+ENV PATH="/opt/gnina/bin:${PATH}"
+
 WORKDIR /workspace
 
-# Command to show gnina version
 CMD ["gnina", "--version"]
