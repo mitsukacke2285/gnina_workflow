@@ -20,14 +20,14 @@ Biopython, Gnina, MDAnalysis, Numpy, OpenBabel-Wheel, OpenMM, Os, Pandas, PDBFix
 PLEASE NOTE: This workflow was only tested in WSL (Windows Subsystem for linux)!!! There is no guarantee that it runs in other OS!!!
 
 # Installation
-In WSL type the following command:
+Create the necessary environment for SDoG to run. In WSL type the following commands:
 
 1. docker build -t {your_username}/workflow-gnina:full . ---> builds image from full.dockerfile
 2. docker push {your_username}/workflow-gnina:full ---> pushes image to your Docker Hub account
 3. docker run -it -v $(pwd):/workspace {your_username}/workflow-gnina:full bash ---> creates and runs container
 
 # Usage
-You can either run "bash runall.sh" to execute the entire workflow automatically (download_pdb.py, protein_preparation.py, ligand_extraction_and_preparation.py, in-silico_screening_and_reporting.py) or run each py file separately. The following section describes the workflow of each py files:
+You can either run "bash runall.sh" to execute the entire workflow automatically (download_pdb.py, protein_preparation.py, ligand_extraction_and_preparation.py, in-silico_screening_and_reporting.py) or run each .py file separately. The following section describes the workflow of each py files:
 
 ## Download PDB file
 
