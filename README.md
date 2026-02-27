@@ -1,4 +1,4 @@
-# Semi-automated workflow for docking small molecules
+# SDoG - Simplified Docking with Gnina, a fully automated Gnina workflow
 This simple workflow for docking small molecule ligands into receptors is ideal for hit-to-lead or lead optimization. Its core modules are:
 
 1. Protein preparation with PDBFixer, rdkit, MDAnalysis, Biopython
