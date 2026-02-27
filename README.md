@@ -59,6 +59,9 @@ python in-silico_screening_and_reporting.py
 
 Gnina will be downloaded and installed, and a folder named molecular_docking/docking_results will be created. You will be prompted to select the docking mode by typing in the desired letter (selections a-d). After some time when the script finishes, the output will be a docked ligand sdf and a report csv file (name output depends on the docking mode selected earlier). The results can be analyzed in an external program or script.
 
+# Future implementations
+Future implementations of SDoG will include visualization and more. Stay tuned.
+
 # References
 - PDB101 tutorial by RCSB Protein Data Bank: https://pdb101.rcsb.org/train/training-events/python4
 - McNutt, A.T., Li, Y., Meli, R. et al. GNINA 1.3: the next increment in molecular docking with deep learning. J Cheminform 17, 28 (2025). https://doi.org/10.1186/s13321-025-00973-x
