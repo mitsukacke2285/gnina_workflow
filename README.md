@@ -1,10 +1,10 @@
-# SDoG - Simplified Docking with Gnina, a fully automated Gnina workflow
+# Simplified Docking with Gnina (SDoG) - a fully automated Gnina workflow
 This simple workflow for docking small molecule ligands into receptors is ideal for hit-to-lead or lead optimization. Its core modules are:
 
-1. Protein preparation with PDBFixer, rdkit, MDAnalysis, Biopython
-2. Ligand preparation with Scrubber (molscrub)
+1. Download of protein crystal structure of interest
+2. Protein preparation with PDBFixer, rdkit, MDAnalysis, Biopython
+3. Ligand preparation with Molscrub
 4. Docking with Gnina (based on Autodock Vina and Smina)
-5. Visual analysis with py3Dmol
 
 This workflow can be used by beginner and advanced users alike. The only input needed is the PDB id. The ligand(s) will be automatically identified after entering the PDB id in the ligand preparation module.
 
